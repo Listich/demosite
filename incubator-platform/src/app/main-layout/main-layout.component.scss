@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.title,
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.home-container {
+    text-align: center;
+    padding: 2rem;
+
+    header {
+        margin-bottom: 2rem;
+
+        h1 {
+            font-size: 3rem;
+            color: #F6AEAE;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+    }
+
+    .login-wrapper {
+        z-index: 1003;
+        position: fixed;
+        top: 10px;
+        right: 10px; // bouton à droite
+    }
+
+    main {
+        margin-top: 5rem;
+
+        .intro {
+            background: linear-gradient(135deg, #f0f4ff, #d9e4ff);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+            h2 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+                border: none;
+                border-radius: 5px;
+                background-color: #F6AEAE;
+                color: white;
+                cursor: pointer;
+                transition: all 0.3s;
+
+                &:hover {
+                    background-color: #ca9997;
+                }
+            }
+        }
+    }
+}

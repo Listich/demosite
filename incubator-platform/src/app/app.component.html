@@ -1,0 +1,18 @@
+<div class="home-container">
+
+  <div class="top-card">
+    <h2>JEB Incubator</h2>
+  </div>
+
+  <div *ngIf="showDownloadCard" class="download-card" (click)="downloadPitchdesk()">
+    <div class="download-icon">
+      <i class="pi pi-download"></i>
+    </div>
+  </div>    
+
+  <app-login></app-login>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>

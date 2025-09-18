@@ -1,0 +1,13 @@
+<div class="menu-card">
+    <div class="button">
+      <i class="pi pi-bars" (click)="menuDisplay()" style="font-size: 2rem; color: white"></i>
+    </div>
+    <div class="categories" *ngIf="showMenu">
+      <h3 (click)="toggleHome()"><i class="pi pi-home"></i> Home</h3>
+      <h3 (click)="toggleProjects()"><i class="pi pi-briefcase"></i> Projects</h3>
+      <h3 (click)="toggleNews()"><i class="pi pi-megaphone"></i> News</h3>
+      <h3 (click)="toggleEvents()"><i class="pi pi-calendar"></i> Events</h3>
+      <h3 (click)="toggleAdvancedSearch()"><i class="pi pi-search"></i> Advanced Search</h3>
+      <h3 (click)="toggleAbout()"><i class="pi pi-info-circle"></i> About</h3>
+    </div>
+</div>

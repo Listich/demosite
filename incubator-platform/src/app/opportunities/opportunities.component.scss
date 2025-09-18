@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.title,
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.home-container {
+    text-align: center;
+    padding: 2rem;
+
+    header {
+        display: inline-flex;
+        align-items: center;
+        gap: 2rem;
+
+        h1 {
+            font-size: 3rem;
+            color: #F6AEAE;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+    }
+
+    .login-wrapper {
+        z-index: 1003;
+        position: fixed;
+        top: 10px;
+        right: 10px; // bouton à droite
+    }
+
+    main {
+        .intro {
+            background: #F6AEAE;
+            padding: 2rem;
+            margin-top: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+            h2 {
+                color: white;
+                font-size: 2rem;
+                margin-bottom: 3rem;
+            }
+
+            p {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .messages {
+            background: white;
+            padding: 2rem;
+            text-align: left;
+            margin: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+            h2 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            h3 {
+                font-weight: bold;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+    }
+}

@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.title,
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.startups-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-left: 10rem;
+    padding-top: 2rem;
+    padding-right: 2rem;
+    height: 100vh;
+    overflow: hidden;
+
+    .small-cards-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        height: 20%; // Réduire la hauteur des petites cartes
+        width: 90%;
+
+        @media (max-width: 1200px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .large-cards-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        height: 60%; // Laisser plus d'espace pour les grandes cartes
+        width: 90%;
+
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; // Éviter les débordements
+
+        h4 {
+            margin-bottom: 0.5rem;
+            color: #F6AEAE;
+            font-size: 0.9rem; // Texte plus petit pour les petites cartes
+        }
+
+        .stat-value {
+            font-size: 1.8rem; // Taille réduite pour les valeurs statistiques
+            font-weight: bold;
+            color: #F6AEAE;
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto; // Ajouter défilement si nécessaire
+            flex-grow: 1; // Prendre l'espace disponible
+
+            li {
+                margin-bottom: 0.3rem;
+                font-size: 0.85rem; // Texte plus petit pour les listes
+                padding: 0.1rem 0;
+            }
+        }
+    }
+
+    // Styles spécifiques pour les petites cartes
+    .small-cards-row .card {
+        h3 {
+            font-size: 1rem; // Titre plus petit
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    // Styles pour les grandes cartes
+    .large-cards-row .card {
+        h3 {
+            font-size: 1.2rem; // Titre normal
+            margin-bottom: 1rem;
+        }
+    }
+
+    .chart-card {
+        .p-chart {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+}

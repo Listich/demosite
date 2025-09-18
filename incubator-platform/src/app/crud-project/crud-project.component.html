@@ -1,0 +1,124 @@
+<div *ngIf="projectDialog" class="registration-card">
+  <form (ngSubmit)="saveProject()">
+    <label>Name</label>
+    <input pInputText [(ngModel)]="selectedProject.name" name="name" type="text" />
+    <label>Description</label>
+    <input pInputText [(ngModel)]="selectedProject.description" name="description" type="text" />
+    <label>Founders</label>
+    <input pInputText [(ngModel)]="selectedProject.founders" name="founders" type="text" />
+    <label>Contacts</label>
+    <input pInputText [(ngModel)]="selectedProject.contacts" name="contacts" type="text" />
+    <label>Progress</label>
+    <input pInputText [(ngModel)]="selectedProject.progress" name="progress" type="text" />
+    <label>Links</label>
+    <input pInputText [(ngModel)]="selectedProject.links" name="links" type="text" />
+    <button pButton type="submit">Register</button>
+    <button pButton (click)="projectDialog=false" type="button">Cancel</button>
+  </form>
+</div>
+
+<div class="card">
+    <p-toast></p-toast>
+  
+    <div class="header-container">
+      <div>
+        <h1 class="title">Project Management</h1>
+      </div>
+      <button
+        pButton
+        label="New Project"
+        icon="pi pi-plus"
+        (click)="openNewProject()"
+        class="p-button-primary"
+      ></button>
+    </div>
+  
+    <p-table
+      [value]="projects"
+      dataKey="id"
+      editMode="row"
+      [tableStyle]="{'min-width': '60rem'}"
+      responsiveLayout="scroll"
+    >
+      <ng-template pTemplate="header">
+        <tr class="table-header">
+          <th class="text-left">Name</th>
+          <th class="text-left">Description</th>
+          <th class="text-left">Founders</th>
+          <th class="text-left">Progression</th>
+          <th class="text-left">Requirements</th>
+          <th class="text-left actions-header">Actions</th>
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-project let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="project" class="table-row">
+          <td class="text-left">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="project.name" class="w-full" />
+              </ng-template>
+              <ng-template pTemplate="output">{{project.name}}</ng-template>
+            </p-cellEditor>
+          </td>
+  
+          <td class="text-left">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="project.description" class="w-full" />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ project.description.length > 100 ? (project.description | slice:0:50) + '...' : project.description }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+  
+          <td class="text-left">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="project.founders" class="w-full" />
+              </ng-template>
+              <ng-template pTemplate="output">{{project.founders}}</ng-template>
+            </p-cellEditor>
+          </td>
+  
+          <td class="text-left">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="project.progress" class="w-full" />
+              </ng-template>
+              <ng-template pTemplate="output">{{project.progress}}</ng-template>
+            </p-cellEditor>
+          </td>
+  
+          <td class="text-left">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText [(ngModel)]="project.needs" class="w-full" />
+              </ng-template>
+              <ng-template pTemplate="output">{{project.needs}}</ng-template>
+            </p-cellEditor>
+          </td>
+  
+          <td class="text-left">
+            <div class="action-buttons">
+              <button *ngIf="!editing" pButton icon="pi pi-pencil" pInitEditableRow (click)="onProjectEditInit(project)" class="p-button-sm p-button-text p-button-primary"></button>
+              <button *ngIf="!editing" pButton icon="pi pi-trash" (click)="deleteProject(project.id!)" class="p-button-sm p-button-text p-button-danger"></button>
+              <button *ngIf="editing" pButton icon="pi pi-check" pSaveEditableRow (click)="onProjectEditSave(project)" class="p-button-sm p-button-text p-button-success"></button>
+              <button *ngIf="editing" pButton icon="pi pi-times" pCancelEditableRow (click)="onProjectEditCancel(project, ri)" class="p-button-sm p-button-text p-button-warning"></button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="empty-message">
+            <i class="pi pi-inbox"></i>
+            <p>No projects saved. Click ‘New Project’ to get started.</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  

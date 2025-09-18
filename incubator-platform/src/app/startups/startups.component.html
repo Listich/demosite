@@ -1,0 +1,61 @@
+<div class="startups-dashboard">
+  <!-- Indicateur de chargement -->
+  <div *ngIf="loading" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Loading data...</p>
+  </div>
+
+  <!-- Première ligne - 3 cartes plus petites -->
+  <div class="small-cards-row">
+    <div class="card stat-card">
+      <h4>Total projects</h4>
+      <p class="stat-value" style="color: #CB90F1;">{{ totalProjects }}</p>
+      <small>Real-time data</small>
+    </div>
+
+    <!-- Carte nombre total de startups -->
+    <div class="card stat-card">
+      <h4>Total startups</h4>
+      <p class="stat-value" style="color: #CB90F1;">{{ totalStartups }}</p>
+      <small>All registered startups</small>
+    </div>
+
+    <!-- Liste investisseurs -->
+    <div class="card list-card">
+      <h3 style="color: #F6AEAE;">Active investors</h3>
+      <div class="investors-scroll-container">
+        <ul class="investors-list">
+          <li *ngFor="let investor of investors" class="investor-item">
+            <div class="font-medium">{{ investor.name }}</div>
+            <div class="text-sm text-gray-600">{{ investor.country }}</div>
+            <div *ngIf="investor.investment_focus" class="text-xs text-blue-600">
+              {{ investor.investment_focus }}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deuxième ligne - 2 cartes normales -->
+  <div class="large-cards-row">
+    <!-- Bar chart - Projets par mois -->
+    <div class="card chart-card">
+      <h3 style="color: #F18585;">Projects created per month</h3>
+      <p-chart *ngIf="dataBar && !loading" type="bar" [data]="dataBar" [options]="optionsBar" />
+      <div *ngIf="loading" class="loading-container">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem;"></i>
+      </div>
+    </div>
+
+    <!-- Donut - Répartition par secteur -->
+    <div class="card chart-card">
+      <h3 style="color: #F18585;">Distribution by sector</h3>
+      <p-chart *ngIf="dataDonut && !loading" type="doughnut" [data]="dataDonut" [options]="optionsDonut" />
+      <div *ngIf="loading" class="loading-container">
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem;"></i>
+      </div>
+    </div>    
+  </div>
+  <p-toast></p-toast>
+</div>

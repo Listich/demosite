@@ -1,0 +1,137 @@
+<!-- 🔹 Tableau des Startups -->
+<div *ngIf="startupDialog" class="registration-card">
+  <form (ngSubmit)="saveStartup()">
+    <label>Name</label>
+    <input pInputText [(ngModel)]="selectedStartup.name" name="name" type="text" />
+    <label>Legal Status</label>
+    <input pInputText [(ngModel)]="selectedStartup.legal_status" name="legal status" type="text" />
+    <label>Adress</label>
+    <input pInputText [(ngModel)]="selectedStartup.address" name="address" type="text" />
+    <label>Mail</label>
+    <input pInputText [(ngModel)]="selectedStartup.email" name="email" type="text" />
+    <label>Phone</label>
+    <input pInputText [(ngModel)]="selectedStartup.phone" name="phone" type="text" />
+    <label>Sector</label>
+    <input pInputText [(ngModel)]="selectedStartup.sector" name="sector" type="text" />
+    <label>Maturity</label>
+    <input pInputText [(ngModel)]="selectedStartup.maturity" name="maturity" type="text" />
+    <button pButton type="submit">Register</button>
+    <button pButton (click)="startupDialog=false" type="button">Cancel</button>
+  </form>
+</div>
+
+<div class="card">
+    <div class="header-container">
+      <div>
+        <h1 class="title">Startup Management</h1>
+      </div>
+      <button
+        pButton
+        label="New Startup"
+        icon="pi pi-plus"
+        (click)="openNewStartup()"
+        class="p-button-primary"
+      ></button>
+    </div>
+  
+    <p-table
+      [value]="startups"
+      dataKey="id"
+      [tableStyle]="{'min-width': '80rem'}"
+      responsiveLayout="scroll"
+    >
+      <ng-template pTemplate="header">
+        <tr class="table-header">
+          <th>Name</th>
+          <th>Legal status</th>
+          <th>Adress</th>
+          <th>Mail</th>
+          <th>Phone</th>
+          <th>Sector</th>
+          <th>Maturity</th>
+          <th style="width: 160px; text-align: center;">Actions</th>
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-startup>
+        <tr class="table-row">
+          <td><div class="font-semibold">{{startup.name}}</div></td>
+          <td><span class="font-medium">{{startup.legal_status}}</span></td>
+          <td>{{startup.address}}</td>
+          <td>
+            <a [href]="'mailto:' + startup.email" class="text-primary no-underline hover:underline">
+              {{startup.email}}
+            </a>
+          </td>
+          <td>{{startup.phone}}</td>
+          <td><span class="sector-tag">{{startup.sector}}</span></td>
+          <td>{{startup.maturity}}</td>
+  
+          <td>
+            <div class="action-buttons">
+              <button 
+                pButton 
+                icon="pi pi-pencil" 
+                (click)="openEditStartup(startup)" 
+                class="p-button-sm p-button-text p-button-primary">
+              </button>
+              <button 
+                pButton 
+                icon="pi pi-trash" 
+                (click)="deleteStartup(startup.id)" 
+                class="p-button-sm p-button-text p-button-danger">
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8" class="text-center py-5 text-gray-500">
+            <i class="pi pi-inbox text-4xl mb-2"></i>
+            <p>No startups registered. Click on ‘New startup’ to begin.</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  
+  <!--<p-dialog header="{{ selectedStartup.id ? 'Modifier la startup' : 'Nouvelle startup' }}" [(visible)]="startupDialog"
+      [modal]="true" [closable]="true" [style]="{width: '40vw'}">
+    <div class="p-fluid">
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" pInputText [(ngModel)]="selectedStartup.name"/>
+      </div>
+      <div class="field">
+        <label for="legal">Legal status</label>
+        <input id="legal" pInputText [(ngModel)]="selectedStartup.legal_status"/>
+      </div>
+      <div class="field">
+        <label for="address">Adress</label>
+        <input id="address" pInputText [(ngModel)]="selectedStartup.address"/>
+      </div>
+      <div class="field">
+        <label for="email">Mail</label>
+        <input id="email" type="email" pInputText [(ngModel)]="selectedStartup.email"/>
+      </div>
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input id="phone" pInputText [(ngModel)]="selectedStartup.phone"/>
+      </div>
+      <div class="field">
+        <label for="sector">Sector</label>
+        <input id="sector" pInputText [(ngModel)]="selectedStartup.sector"/>
+      </div>
+      <div class="field">
+        <label for="maturity">Maturity</label>
+        <input id="maturity" pInputText [(ngModel)]="selectedStartup.maturity"/>
+      </div>
+    </div>
+  
+    <ng-template pTemplate="footer">
+      <button pButton label="Annuler" icon="pi pi-times" (click)="startupDialog=false" class="p-button-text"></button>
+      <button pButton label="Register" icon="pi pi-check" (click)="saveStartup()" class="p-button-primary"></button>
+    </ng-template>
+  </p-dialog>-->

@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.title,
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.menu-card {
+    background-color: #F49C9C;   /* Bordeaux */
+    color: white;
+    width: 250px;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: -4px 4px 12px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    display: inline-flex;
+    min-height: 52px;
+    flex-direction: column;
+    align-items: flex-start;
+    top: 40px;
+    left: 18px;
+    z-index: 1001;
+  
+    .button {
+      display: flex;
+      justify-content: flex-start; /* bouton aligné à gauche */
+      margin-bottom: 1rem;
+    }
+  
+    .categories {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+  
+      h3 {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 0;
+        cursor: pointer;
+        padding: 0.5rem 0.8rem;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+  
+        &:hover {
+          background-color: #E4BEF8; /* plus foncé au hover */
+        }
+  
+        i {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+  

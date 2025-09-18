@@ -1,0 +1,21 @@
+<div class="home-container">
+    <header>
+        <i class="pi pi-user" style="font-size: 3rem; color: #F6AEAE"></i>
+        <h1>My Profile</h1>
+    </header>
+
+    <main>
+        <section class="intro">
+            <img [src]="userImageUrl" alt="Profile Picture" class="avatar" />
+            <section class="info" *ngIf="profileDetails">
+                <h2>{{ user?.name }}</h2>
+                <p>User #{{ user?.id }}</p>
+                <p>Contact: {{ user?.email }}</p>
+                <p>Role: {{ user?.role }}</p>
+            </section>
+            <section class="info" *ngIf="!profileDetails">
+                <h3>No details are available for your profile</h3>
+            </section>
+        </section>
+    </main>
+</div>

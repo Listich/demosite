@@ -1,0 +1,126 @@
+<div class="events-container">
+    <!-- Header -->
+    <header class="events-header">
+      <p>Discover our upcoming events, conferences and networking sessions</p>
+    </header>
+  
+    <!-- Loading -->
+    <div class="loading-state" *ngIf="loading">
+      <div class="loading-spinner"></div>
+      <p>Loading events...</p>
+    </div>
+  
+    <!-- Error -->
+    <div class="error-state" *ngIf="error && !loading">
+      <i class="pi pi-exclamation-triangle"></i>
+      <h3>Error</h3>
+      <p>Unable to load events. Please try again later.</p>
+      <button class="retry-button" (click)="loadEvents()">retry</button>
+    </div>
+  
+    <!-- Content -->
+    <div *ngIf="!loading && !error">
+      <!-- View toggle -->
+      <div class="view-toggle">
+        <button [class.active]="selectedView === 'list'" (click)="setView('list')" class="view-btn">
+          <i class="pi pi-list"></i> List
+        </button>
+        <button [class.active]="selectedView === 'calendar'" (click)="setView('calendar')" class="view-btn">
+          <i class="pi pi-calendar"></i> Calendar
+        </button>
+      </div>
+  
+      <!-- Search -->
+      <div class="search-section">
+        <div class="search-box">
+          <i class="pi pi-search"></i>
+          <input type="text" placeholder="Search for an event..." (input)="searchEvents($event)" class="search-input">
+        </div>
+      </div>
+  
+      <!-- List View -->
+      <div *ngIf="selectedView === 'list'" class="events-list">
+        <div class="events-section">
+          <h2>Upcoming Events</h2>
+          <div class="events-grid">
+            <div *ngFor="let event of filteredEvents" class="event-card">
+              <div class="event-content">
+                <div class="event-meta">
+                  <span class="event-date">
+                    <i class="pi pi-calendar"></i>
+                    {{ formatFullDate(event.start_date) }}
+                    <span *ngIf="event.start_time"> à {{ formatTime(event.start_time) }}</span>
+                  </span>
+                  <span class="event-location">
+                    <i class="pi pi-map-marker"></i>
+                    {{ event.localisation }}
+                  </span>
+                </div>
+                <h3 class="event-title">{{ event.name }}</h3>
+                <p class="event-description">{{ event.description }}</p>
+                <div class="event-footer">
+                  <div class="event-actions">
+                    <button class="details-btn" *ngIf="event.registration_link">S'inscrire</button>
+                    <!-- <button class="share-btn"><i class="pi pi-share-alt"></i></button> -->
+                  </div>
+                  <!-- <span class="updated-at">Mis à jour le {{ formatFullDate(event.updated_at) }}</span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Empty state -->
+        <div class="empty-state" *ngIf="filteredEvents.length === 0">
+          <i class="pi pi-calendar"></i>
+          <h3>No events planned</h3>
+          <p>No events match your search.</p>
+        </div>
+      </div>
+  
+      <!-- Calendar View -->
+      <div *ngIf="selectedView === 'calendar'" class="calendar-view">
+        <div class="calendar-header">
+          <button class="nav-btn" (click)="changeMonth(-1)"><i class="pi pi-chevron-left"></i></button>
+          <h2>{{ getMonthName() }}</h2>
+          <button class="nav-btn" (click)="changeMonth(1)"><i class="pi pi-chevron-right"></i></button>
+        </div>
+  
+        <div class="calendar-grid">
+          <div class="calendar-weekdays">
+            <div *ngFor="let day of ['Mon', 'Tue', 'Wen', 'Thu', 'Fri', 'Sat', 'Sun']" class="weekday">
+              {{ day }}
+            </div>
+          </div>
+  
+          <div class="calendar-days">
+            <div *ngFor="let day of getEventDays()" class="calendar-day"
+                 [class.today]="isToday(day.date)" [class.has-events]="day.events.length > 0">
+              <span class="day-number">{{ day.date.getDate() }}</span>
+              <div class="day-events">
+                <div *ngFor="let event of day.events" class="calendar-event">
+                  <span class="event-dot"></span>
+                  <span class="event-title">{{ event.name }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Events for month -->
+        <div class="month-events">
+          <h3>Events of {{ getMonthName() }}</h3>
+          <div *ngFor="let event of getMonthEvents()" class="month-event-item">
+            <div class="event-date">
+              {{ formatDay(event.start_date) }} {{ formatMonthShort(event.start_date) }}
+            </div>
+            <div class="event-info">
+              <h4>{{ event.name }}</h4>
+              <p>{{ event.localisation }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,110 @@
+<!-- 🔹 Tableau des Utilisateurs -->
+<div *ngIf="userDialog" class="registration-card">
+  <form (ngSubmit)="saveUser()">
+    <label>Name</label>
+    <input pInputText [(ngModel)]="selectedUser.name" name="name" type="text" />
+    <label>Mail</label>
+    <input pInputText [(ngModel)]="selectedUser.email" name="email" type="email" />
+    <label>Password</label>
+    <input pInputText [(ngModel)]="selectedUser.password" name="password" type="password" />
+    <label>Role</label>
+    <input pInputText [(ngModel)]="selectedUser.role" name="role" type="text" />
+    <button pButton type="submit">Register</button>
+    <button pButton (click)="userDialog=false" type="button">Cancel</button>
+  </form>
+</div>
+
+<div class="card">
+  <div class="header-container">
+    <div>
+      <h1 class="title">User Management</h1>
+    </div>
+    <button
+      pButton
+      label="New User"
+      icon="pi pi-plus"
+      (click)="addUser()"
+      class="p-button-primary"
+    ></button>
+  </div>
+
+  <p-table
+    [value]="users"
+    dataKey="id"
+    editMode="row"
+    [tableStyle]="{'min-width': '60rem'}"
+    responsiveLayout="scroll"
+  >
+    <!-- 🔹 En-tête -->
+    <ng-template pTemplate="header">
+      <tr class="table-header">
+        <th>Name</th>
+        <th>Mail</th>
+        <th>Role</th>
+        <th style="width: 160px; text-align: center;">Actions</th>
+      </tr>
+    </ng-template>
+
+    <!-- 🔹 Corps -->
+    <ng-template pTemplate="body" let-user let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="user" class="table-row">
+
+        <!-- Colonne Nom -->
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText [(ngModel)]="user.name" class="w-full" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{user.name}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+
+        <!-- Colonne Email -->
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText [(ngModel)]="user.email" class="w-full" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{user.email}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+
+        <!-- Colonne Rôle -->
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText [(ngModel)]="user.role" class="w-full" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{user.role}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+
+        <!-- Colonne Actions -->
+        <td>
+          <div class="action-buttons">
+            <button *ngIf="!editing" pButton icon="pi pi-pencil" pInitEditableRow (click)="onUserEditInit(user)" class="p-button-sm p-button-text p-button-primary"></button>
+            <button *ngIf="editing" pButton icon="pi pi-check" pSaveEditableRow (click)="onUserEditSave(user)" class="p-button-sm p-button-text p-button-success"></button>
+            <button *ngIf="editing" pButton icon="pi pi-times" pCancelEditableRow (click)="onUserEditCancel(user, ri)" class="p-button-sm p-button-text p-button-warning"></button>
+            <button pButton icon="pi pi-trash" (click)="deleteUser(user.id!)" class="p-button-sm p-button-text p-button-danger"></button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- 🔹 Message si vide -->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="text-center py-5 text-gray-500">
+          <i class="pi pi-inbox text-4xl mb-2"></i>
+          <p>No registered users. Click on ‘New user’ to begin.</p>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

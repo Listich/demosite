@@ -1,0 +1,12 @@
+<div class="menu-card">
+    <div class="button">
+      <i class="pi pi-bars" (click)="menuDisplay()" style="font-size: 2rem; color: white"></i>
+    </div>
+    <div class="categories" *ngIf="showMenu">
+      <h3 (click)="toggleDashboard()"><i class="pi pi-objects-column"></i> Dashboard</h3>
+      <h3 (click)="toggleUser()"><i class="pi pi-user"></i> User</h3>
+      <h3 (click)="togglestartup()"><i class="pi pi-home"></i> Startup</h3>
+      <h3 (click)="toggleproject()"><i class="pi pi-calendar"></i> Projects</h3>
+      <h3 (click)="toggleOpportunities()"><i class="pi pi-megaphone"></i> Opportunities</h3>
+    </div>
+</div>

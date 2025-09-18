@@ -1,0 +1,118 @@
+<div class="news-container">
+    <!-- Loading -->
+    <div class="loading-state" *ngIf="loading">
+        <div class="loading-spinner"></div>
+        <p>Loading news...</p>
+    </div>
+
+    <!-- Error -->
+    <div class="error-state" *ngIf="error && !loading">
+        <i class="pi pi-exclamation-triangle"></i>
+        <h3>Error</h3>
+        <p>Unable to load news. Please try again later.</p>
+        <button class="retry-button" (click)="loadNews()">Retry</button>
+    </div>
+
+    <!-- Content -->
+    <div *ngIf="!loading && !error">
+        <!-- View toggle -->
+        <div class="view-toggle">
+            <button [class.active]="selectedView === 'list'" (click)="setView('list')" class="view-btn">
+                <i class="pi pi-list"></i> List
+            </button>
+            <button [class.active]="selectedView === 'calendar'" (click)="setView('calendar')" class="view-btn">
+                <i class="pi pi-calendar"></i> Calendar
+            </button>
+        </div>
+
+        <!-- Search -->
+        <div class="search-section">
+            <div class="search-box">
+                <i class="pi pi-search"></i>
+                <input type="text" placeholder="Search news..." (input)="searchNews($event)" class="search-input" />
+            </div>
+        </div>
+
+        <!-- List View -->
+        <div *ngIf="selectedView === 'list'" class="news-list">
+            <div class="news-section">
+                <h2>Latest News</h2>
+                <header class="news-header">
+                    <p>Discover the latest news</p>
+                </header>
+                <div class="news-grid">
+                    <div *ngFor="let news of filteredNews" class="news-card">
+                        <div class="news-image" *ngIf="news.image_url">
+                            <img class="rounded-news-image" [src]="news.image_url" [alt]="news.title" />
+                        </div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-date">
+                                    <i class="pi pi-calendar"></i>
+                                    {{ formatFullDate(news.news_date) }}
+                                </span>
+                                <span class="news-location">
+                                    <i class="pi pi-map-marker"></i>
+                                    {{ news.location }}
+                                </span>
+                            </div>
+                            <h3 class="news-title">{{ news.title }}</h3>
+                            <p class="news-category">{{ news.category }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty state -->
+            <div class="empty-state" *ngIf="filteredNews.length === 0">
+                <i class="pi pi-info-circle"></i>
+                <h3>No news found</h3>
+                <p>No news match your search criteria.</p>
+            </div>
+        </div>
+
+        <!-- Calendar View -->
+        <div *ngIf="selectedView === 'calendar'" class="calendar-view">
+            <div class="calendar-header">
+                <button class="nav-btn" (click)="changeMonth(-1)"><i class="pi pi-chevron-left"></i></button>
+                <h2>{{ getMonthName() }}</h2>
+                <button class="nav-btn" (click)="changeMonth(1)"><i class="pi pi-chevron-right"></i></button>
+            </div>
+
+            <div class="calendar-grid">
+                <div class="calendar-weekdays">
+                    <div *ngFor="let day of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" class="weekday">
+                        {{ day }}
+                    </div>
+                </div>
+
+                <div class="calendar-days">
+                    <div *ngFor="let day of getNewsDays()" class="calendar-day" [class.today]="isToday(day.date)"
+                        [class.has-news]="day.news.length > 0">
+                        <span class="day-number">{{ day.date.getDate() }}</span>
+                        <div class="day-news">
+                            <div *ngFor="let news of day.news" class="calendar-news">
+                                <span class="news-dot"></span>
+                                <span class="news-title">{{ news.title }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News for month -->
+            <div class="month-news">
+                <h3>News for {{ getMonthName() }}</h3>
+                <div *ngFor="let news of getMonthNews()" class="month-news-item">
+                    <div class="news-date">
+                        {{ formatDay(news.news_date) }} {{ formatMonthShort(news.news_date) }}
+                    </div>
+                    <div class="news-info">
+                        <h4>{{ news.title }}</h4>
+                        <p>{{ news.location }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

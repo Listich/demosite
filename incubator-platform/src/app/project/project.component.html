@@ -1,0 +1,162 @@
+<div class="card">
+  <p-toast></p-toast>
+
+  <div class="header-container">
+    <div class="header-left">
+      <h1 class="title">Project Catalog</h1>
+      <p class="subtitle">Discover the innovative startups in our incubator</p>
+
+      <div class="filter-container">
+        <div class="search-box">
+          <i class="pi pi-search"></i>
+          <input type="text" [(ngModel)]="searchText" (input)="applyFilters()" placeholder="Search for a project..."
+            class="search-input">
+        </div>
+
+        <p-dropdown [options]="sectorOptions" [(ngModel)]="selectedSector" placeholder="All the sectors"
+          [showClear]="true" (onChange)="applyFilters()" class="filter-dropdown">
+        </p-dropdown>
+
+        <p-dropdown [options]="maturityOptions" [(ngModel)]="selectedMaturity" placeholder="All the maturities"
+          [showClear]="true" (onChange)="applyFilters()" class="filter-dropdown">
+        </p-dropdown>
+
+        <p-dropdown [options]="locationOptions" [(ngModel)]="selectedLocation" placeholder="All the locations"
+          [showClear]="true" (onChange)="applyFilters()" class="filter-dropdown">
+        </p-dropdown>
+
+        <button pButton icon="pi pi-times" class="p-button-outlined clear-filters-btn" (click)="clearFilters()"
+          label="Reset">
+        </button>
+      </div>
+    </div>
+
+    <div class="header-stats">
+      <div class="stat-badge">
+        <span class="stat-number">{{filteredProjects.length}}</span>
+        <span class="stat-label">projects</span>
+      </div>
+    </div>
+  </div>
+
+  <p-table [value]="filteredProjects" dataKey="id" [tableStyle]="{'min-width': '75rem'}" responsiveLayout="scroll"
+    [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Display of {first} to {last} on {totalRecords} projects">
+    <ng-template pTemplate="header">
+      <tr class="table-header">
+        <th pSortableColumn="name" class="text-left">Name <p-sortIcon field="name"></p-sortIcon></th>
+        <th class="text-left">Description</th>
+        <th pSortableColumn="sector" class="text-left">Sector <p-sortIcon field="sector"></p-sortIcon></th>
+        <th pSortableColumn="maturity" class="text-left">Maturity <p-sortIcon field="maturity"></p-sortIcon></th>
+        <th pSortableColumn="location" class="text-left">Location <p-sortIcon field="location"></p-sortIcon></th>
+        <th class="text-left"></th>
+        <th class="text-left">Progress</th>
+        <th class="text-left">Needs</th>
+        <th class="text-left actions-header"></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-project>
+      <tr class="table-row">
+        <td class="text-left project-name">
+          <strong>{{project.name}}</strong>
+        </td>
+
+        <td class="text-left project-description">
+          {{ project.description.length > 100 ? (project.description | slice:0:100) + '...' : project.description }}
+        </td>
+
+        <td class="text-left">
+          <span class="tag sector-tag">{{project.sector}}</span>
+        </td>
+
+        <td class="text-left">
+          <span class="tag maturity-tag" [ngClass]="getMaturityClass(project.maturity)">{{project.maturity}}</span>
+        </td>
+
+        <td class="text-left">
+          <i class="pi pi-map-marker"></i> {{extractCityFromAddress(project.location)}}
+        </td>
+
+        <td class="text-left">
+          {{project.founders}}
+        </td>
+
+        <td class="text-left">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width]="project.progress"></div>
+            <span class="progress-text">{{project.progress}}</span>
+          </div>
+        </td>
+
+        <td class="text-left">
+          {{project.needs}}
+        </td>
+
+        <td class="text-left">
+          <div class="action-buttons">
+            <button pButton icon="pi pi-eye" class="p-button-sm p-button-text p-button-info"
+              (click)="viewProjectDetails(project)" pTooltip="Voir les détails" tooltipPosition="top">
+            </button>
+            <button pButton icon="pi pi-external-link" class="p-button-sm p-button-text p-button-help"
+              (click)="openProjectLinks(project)" pTooltip="Ouvrir les liens" tooltipPosition="top"
+              *ngIf="project.links">
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="9" class="empty-message">
+          <i class="pi pi-search" style="font-size: 2.5rem;"></i>
+          <p *ngIf="hasActiveFilters()">No projects match your search criteria.</p>
+          <button pButton label="Reset filters" (click)="clearFilters()" class="p-button-outlined"
+            *ngIf="hasActiveFilters()">
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog header="Détails du projet" [(visible)]="projectDialog" [style]="{width: '50vw'}" [modal]="true"
+  [dismissableMask]="true">
+  <div class="project-details" *ngIf="selectedProject">
+    <h3>{{selectedProject.name}}</h3>
+    <p class="description">{{selectedProject.description}}</p>
+
+    <div class="details-grid">
+      <div class="detail-item">
+        <label>Sector:</label>
+        <span>{{selectedProject.sector}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Maturity:</label>
+        <span>{{selectedProject.maturity}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Localisation:</label>
+        <span>{{extractCityFromAddress(selectedProject.location)}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Fondators:</label>
+        <span>{{selectedProject.founders}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Progress:</label>
+        <span>{{selectedProject.progress}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Needs:</label>
+        <span>{{selectedProject.needs}}</span>
+      </div>
+    </div>
+
+    <div class="links-section" *ngIf="selectedProject.links">
+      <h4>Liens</h4>
+      <p>{{selectedProject.links}}</p>
+    </div>
+  </div>
+</p-dialog>

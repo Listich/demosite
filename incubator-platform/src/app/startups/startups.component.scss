@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.title,
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.startups-dashboard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  .download-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 2rem;
+    color: #F6AEAE;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.3s ease;
+    z-index: 1300;
+  
+    &:hover {
+      color: #f18585;
+      transform: scale(1.15);
+    }
+  }
+  
+
+  .small-cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    height: 30%;
+    min-height: 200px;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+  }
+
+  .large-cards-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    height: 100%;
+    min-height: 450px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    h3, h4 {
+      margin: 0 0 0.8rem 0;
+      color: #F6AEAE;
+    }
+
+    h4 {
+      font-size: 0.9rem;
+    }
+
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #F6AEAE;
+      text-align: center;
+      margin: 0.5rem 0;
+    }
+
+    small {
+      text-align: center;
+      color: #6b7280;
+      font-size: 0.8rem;
+    }
+  }
+
+  .list-card {
+    h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+  }
+
+  .startups-scroll-container,
+  .investors-scroll-container {
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: calc(100% - 2rem);
+  }
+
+  .startups-list,
+  .investors-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .startup-item,
+    .investor-item {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #f1f5f9;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .chart-card {
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .p-chart {
+      width: 100% !important;
+      height: calc(100% - 2.5rem) !important;
+      min-height: 250px;
+    }
+  }
+
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1002;
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #F6AEAE;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #F6AEAE;
+      font-weight: 500;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    padding: 1rem;
+
+    .small-cards-row,
+    .large-cards-row {
+      gap: 1rem;
+    }
+
+    .card {
+      padding: 0.8rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    height: auto;
+    overflow: visible;
+    padding: 1rem 0.5rem;
+
+    .small-cards-row,
+    .large-cards-row {
+      grid-template-columns: 1fr;
+      height: auto;
+      gap: 1rem;
+    }
+
+    .card {
+      min-height: 200px;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.text-green-600 {
+  color: #CB90F1;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.text-gray-600 {
+  color: #4b5563;
+}
+
+.text-blue-600 {
+  color: #CB90F1;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}

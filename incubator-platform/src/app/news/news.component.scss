@@ -1,0 +1,485 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.title,
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+$primary-color: #F49C9C;
+$secondary-color: #E4BEF8;
+$accent-color: #f72585;
+$text-color: #333;
+$light-gray: #f8f9fa;
+$border-color: #e5e7eb;
+
+// Mixins
+@mixin card {
+    background: #F8CACF;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.events-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0rem;
+}
+
+.rounded-news-image {
+    margin-bottom: 1rem;
+    max-width: 95%;
+    max-height: 80%;
+    border-radius: 12px;
+}
+
+// Header
+.events-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: $primary-color;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        color: #6b7280;
+        font-size: 1.1rem;
+    }
+}
+
+// États
+.loading-state,
+.error-state,
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+
+    i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    p {
+        color: #6b7280;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.loading-state {
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid $light-gray;
+        border-top: 3px solid $primary-color;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1.5rem;
+    }
+}
+
+.error-state {
+    color: #dc3545;
+
+    h3 {
+        color: #dc3545;
+        margin-bottom: 1rem;
+    }
+
+    .retry-button {
+        background: $primary-color;
+        color: white;
+        border: none;
+        padding: 0.7rem 1.3rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+
+        &:hover {
+            background: darken($primary-color, 10%);
+        }
+    }
+}
+
+.empty-state {
+    i {
+        color: #d1d5db;
+    }
+}
+
+// Contrôles
+.view-toggle {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+
+    .view-btn {
+        padding: 0.6rem 1.2rem;
+        border: 2px solid $border-color;
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        @include flex-center;
+        gap: 0.5rem;
+
+        &.active {
+            background: $primary-color;
+            color: white;
+            border-color: $primary-color;
+        }
+
+        &:hover:not(.active) {
+            border-color: $primary-color;
+        }
+    }
+}
+
+.search-section {
+    margin-bottom: 1.5rem;
+
+    .search-box {
+        position: relative;
+        max-width: 350px;
+
+        i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 0.8rem 0.8rem 2.8rem;
+            border: 2px solid $border-color;
+            border-radius: 8px;
+            font-size: 0.95rem;
+
+            &:focus {
+                outline: none;
+                border-color: $primary-color;
+            }
+        }
+    }
+}
+
+.news-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.news-card {
+    @include card;
+    padding: 1.2rem;
+    flex: 0 1 320px;
+    max-width: 320px;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .news-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+
+        .news-date {
+            background: $primary-color;
+            color: white;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .news-category {
+            background: $light-gray;
+            color: #6b7280;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+    }
+
+    .news-content {
+        .news-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: $text-color;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .news-meta {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+
+            .news-date,
+            .news-location {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: #6b7280;
+                font-size: 0.85rem;
+
+                i {
+                    color: $primary-color;
+                    width: 16px;
+                }
+            }
+        }
+
+        .news-description {
+            color: #6b7280;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    }
+}
+
+// Vue Calendrier simplifiée
+.calendar-view {
+    .calendar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+
+        h2 {
+            font-size: 1.3rem;
+            color: $secondary-color;
+            font-weight: 600;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 0.5rem;
+
+            .nav-btn {
+                background: $light-gray;
+                border: none;
+                padding: 0.5rem;
+                border-radius: 6px;
+                cursor: pointer;
+                color: $primary-color;
+
+                &:hover {
+                    background: darken($light-gray, 5%);
+                }
+            }
+        }
+    }
+
+    .calendar-grid {
+        @include card;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .calendar-weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.3rem;
+        margin-bottom: 0.8rem;
+
+        .weekday {
+            text-align: center;
+            font-weight: 600;
+            color: $primary-color;
+            font-size: 0.85rem;
+            padding: 0.5rem;
+        }
+    }
+
+    .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.3rem;
+
+        .calendar-day {
+            min-height: 60px;
+            border: 1px solid $border-color;
+            border-radius: 6px;
+            padding: 0.4rem;
+            position: relative;
+
+            &.today {
+                border-color: $primary-color;
+                background: rgba($primary-color, 0.1);
+            }
+
+            &.has-events {
+                border-color: $accent-color;
+            }
+
+            .day-number {
+                font-weight: 600;
+                color: $text-color;
+                font-size: 0.9rem;
+            }
+
+            .event-dot {
+                position: absolute;
+                bottom: 4px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 6px;
+                height: 6px;
+                background: $accent-color;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    .month-events {
+        h3 {
+            font-size: 1.1rem;
+            color: $secondary-color;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .month-event-item {
+            @include card;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+
+            .event-date {
+                background: $primary-color;
+                color: white;
+                padding: 0.4rem 0.6rem;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                display: inline-block;
+                margin-bottom: 0.5rem;
+            }
+
+            .event-title {
+                font-size: 0.95rem;
+                color: $text-color;
+                font-weight: 600;
+                margin-bottom: 0.3rem;
+            }
+
+            .event-location {
+                color: #6b7280;
+                font-size: 0.8rem;
+            }
+        }
+    }
+}
+
+// Animations
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .events-container {
+        padding: 1rem;
+    }
+
+    .events-header {
+        h1 {
+            font-size: 1.7rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .view-toggle {
+        flex-wrap: wrap;
+
+        .view-btn {
+            flex: 1;
+            min-width: 120px;
+        }
+    }
+
+    .calendar-day {
+        min-height: 50px !important;
+        font-size: 0.8rem;
+
+        .day-number {
+            font-size: 0.8rem !important;
+        }
+    }
+
+    .event-card {
+        .event-footer {
+            flex-direction: column;
+            gap: 0.8rem;
+            align-items: flex-start;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .event-card {
+        padding: 1rem;
+
+        .event-header {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        .event-meta {
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+    }
+
+    .calendar-weekdays .weekday {
+        font-size: 0.75rem;
+        padding: 0.3rem;
+    }
+}
